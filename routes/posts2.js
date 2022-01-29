@@ -29,7 +29,7 @@ router.post('/',async (req,res)=>{
    
 });
 //update
-/*router.put("/:id", function(req, res){
+router.put("/:id", function(req, res){
     const post={
         Mois: req.body.Mois,
         Valeur: req.body.Valeur
@@ -39,12 +39,14 @@ router.post('/',async (req,res)=>{
         if (err) {
             console.log("ERROR!");
         } else {
-            await collection.updateOne(post).then(()=>{
+            await collection.updateOne({ _id: new ObjectID(req.params.id) },
+            { $set: { Mois: req.body.Mois, Valeur: req.body.Valeur } },
+            { upsert: true }).then(()=>{
                 res.json(post);
             })
         }
     });
- });*/
+ });
 
 
 module.exports=router;
